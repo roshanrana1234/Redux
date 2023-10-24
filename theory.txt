@@ -1,0 +1,250 @@
+Redux Toolkit (Featuring React) OnlineHoja.com
+React portion nhi hai
+"Redux is a predictable state container for javaScript apps"
+
+-it is for javaScript apps
+-it is a state container
+-it is predictable (that was or could be expected to happen)
+
+
+#Redux is for javaScript applications
+-Redux is not tied to React
+-it can be used with UI Library eg; React, Angular, Vue or even vanilla javascript
+-Redux is a library for javaScript applications
+
+
+#Redux is a state container
+-Redux stores a state of your application
+-Consider a React app -state of a component
+-State of an app is the state shared by all the individual components of that app (this inclued the data and all the UI logics )
+-Redux will store and manage the application state.
+
+eg: state={
+    username:"",
+    password:"",
+    submitting:false,
+}
+
+state={
+    user:[]
+}
+
+data and ui logics
+
+#Redux is Predictable 
+Predictable in what way ?
+-Redux is a state container
+-The state of the application can change
+-Ex: todo list app => item(pending) =>item(completed)
+-In redux, a patter is enforced to ensur all the state transitions are explicit and can be tracked
+-The changes to your application's state become predictable.
+
+#What is Redux ?
+"Redux is a Predictable state container for javaScript apps"
+
+#Why Redux?
+-if You want to manage the global state of your application in a predictable way , redux can help you .
+-The Patterns and tools provided by Redux make it easier to understand when, where, why and how the state in your application is being updated , and how your application logic will behave when those changes occur
+-Redux guides you towards writing code that is predictable and testable, which helps give you confidence that your application will work as expected
+
+
+#What is Redux Toolkit?
+Redux toolkit is the official, opinionated , batteries-included toolset for efficient Redux development.
+-it is also intended to be the standard way to write Redux logic in your application.
+
+#Why Redux Toolkit?
+-Redux is a greate, but it does have a few shortcomings.
+-Configuring redux in an app seems complicated.
+-In additions to redux, a lot of packages have to be installed to get redux to do something useful.
+-Redux requires too much boilerplate code.
+
+Redux toolkit serves as an sbstraction over redux, it hides the difficult parts ensuring you have a good developer experience.
+
+#Redux toolkit Featuring React 
+-Redux or Redux Toolkit don't need a UI Library to work
+-RTK  + React
+
+React-Redux
+
+UI Library(React)   = Redux (Redux Toolkit) (State Management Library)
+
+they both work indepandetly of each other , 
+we have React-Redux to simplyfy them
+
+"React-Redux is the official Redux UI binding library for React"
+
+Summary:-
+-React is a library used to build user interfaces.
+-Redux is a library for managing state in a predictable way in javaScript applications
+-Redux toolkit is a library for efficient redux development.
+-React-redux is a library that provides bindings to use React and Redux(Toolkit) together in an application.
+
+Few Points Before we Proceed-
+The most basic mistake you can do is learning redux and react in parallel
+
+"When Should I use redux in my react application?"
+
+-you have large amount of applications state that are needed in many places in the app
+- The app state is updated frequentlyy over time.
+-The logic to update that state may be complex
+-The app has a medium or large-sized codebase, and might be worked on by many people.
+
+
+Course Structure 
+-Learn Redux first
+-Learn Redux toolkit second
+-Learn React Redux third
+
+
+Three Core Concepts.
+
+Cake Shop.
+
+Entities
+Shop - Stores cakes on a shelf
+Shopkeeper - Behind the counter
+Customer - At the store entrance.
+
+Activities:-
+Customer - Order a cake.  
+Shopkeeper - Box a cake from the shelf 
+           - Receipt to keep track
+
+Cake shop Scenario (shop)  (Cake ordered) (shopkeeper)
+Redux(store) (Action) (Reducer)
+Purpose (Holds the state of your application) (Describe What Happened) (Ties the store and actions together)
+
+A `Store` That holds the state of your application.
+An `action` that describes what happened in the application.
+A `reducer` Which handles the action and decides how to update the state.
+
+
+
+Three Principles:-
+
+First Principle 
+'The global state of your application is stored as an object inside a single store.'
+Maintain our application state in a single object which would be managed by the Redux store.
+
+CakeShop- 
+Let's assume we are tracking the number of cakes on the shelf
+
+{
+    numberOfCake:10
+}
+
+Second Principle:-
+
+'The Only way to change the state is to dispatch an action, an object that describes what happened'.
+To update the state of your app, you need to let Redux know about that with an action.
+Not allowed to directly update the state object.
+
+Cake Shop-
+
+Scan the QR code and place an order - CAKE_ORDERED
+How we Represent action in code 
+object that contain type property describing an event
+
+{
+    type: 'CAKE_ORDERED'
+}
+
+
+Third Principle - 
+'To specify how the state tree is updated based on an action, you write pure reducers.'
+
+Pure Reducers == Basically a pure Funtion that takes the Previous state and action as input and return new State
+
+Reducer -( PreviousState,action ) => newState
+
+Being a Pure function insted of updating the previous state it returns a new state
+
+Cake Shop -
+
+Reducer is the shopkeeper.
+
+Reducer is the shopkeeper
+const reducer = (state = initialState, action) =>{
+    switch(action.type){
+        case CAKE_ORDERED:
+        return {
+            numberOfCake:state.numberOfCake - 1
+        }
+    }
+}
+
+
+Actions :-
+-The Only way you application can interact with the store. 
+-carry some information from your app to the redux store
+plain javaScript objects
+-Have a 'type' property that describes something that happened in the application.
+-The 'type' property is typically defined as string constants
+
+
+
+ 
+Middleware:-
+-Is the suggested way to extend Redux with custom funtionality.
+-Provides a third-party extension point between dispatching an action, and the moment it reaches the reducer.
+-Use Middleware for logging, crash reporting, performing asynchronous task etc.
+
+
+Redux Concerns :-
+Redux requires too much boilerplate code .
+-Action.
+-Action object.
+-Action creator.
+-Switch statement in a reducer
+
+A lot of other packages have to be installed to work with redux
+-Redux-thunk
+-immer
+-Redux-devtools.
+
+
+// Actions
+// -The only way your application can interact with the store.
+// -Carry some information from you app to the redux store.
+// -Plan JavaScript objects.
+// -Have a `type` Property that describes something that happened in the application.
+// - the `type` property is typically defined as string constants.
+
+// We define string constant that indicates the type of the action.
+
+
+// Reducers
+// Specify how the app's changes in response to actions sent to the store.
+// Function that accepts state and actions as arguments, and returns the next state of the application.
+// (previousState, action) => newState.
+
+
+// Redux Store
+// One Store for the Entire application.
+// Responsibilities-
+//  Holds application state
+//  Allows access to state via getState()
+//  Allows state to be updated via dispatch(action)
+//  Register listeners via subscribe(listener)
+//  Handles unregistering of listeners via the functions returned by subscribe(listener).
+
+Bind Action Creator Funtion
+const bindActionCreator = redux.bindActionCreators;
+
+combine reducer
+const combineReducers = redux.combineReducers;
+
+immer 
+
+Middleware:-
+-Is the suggested way to extend Redux with custom funtionality.
+-Provides a third-party extension point between dispatching an action, and the moment it reaches the reducer.
+-Use middleware for logging , crash reporting , performing asynchronous tack etc.
+
+npm i redux-logger
+
+const applyMiddleware = redux.applyMiddleware;
+const reduxLogger = require("redux-logger");
+const logger = reduxLogger.createLogger();
+
+const store = createStore(reducer, applyMiddleware(logger));

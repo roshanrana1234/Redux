@@ -1,0 +1,10 @@
+npm init --yes
+This will initialize the package.json with default settings
+
+npm i redux
+
+index.js
+
+npm i immer
+
+npm i redux-logger
