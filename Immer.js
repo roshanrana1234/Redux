@@ -19,6 +19,9 @@ const initialState = {
     state: "MP",
     city: "Bhopal",
     street: "Saket",
+    nearMarke: {
+      bac: "fjkdj",
+    },
   },
 };
 

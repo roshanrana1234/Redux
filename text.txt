@@ -8,3 +8,7 @@ index.js
 npm i immer
 
 npm i redux-logger
+
+npm i axios
+
+npm i redux-thunk

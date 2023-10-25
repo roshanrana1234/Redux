@@ -248,3 +248,152 @@ const reduxLogger = require("redux-logger");
 const logger = reduxLogger.createLogger();
 
 const store = createStore(reducer, applyMiddleware(logger));
+
+
+
+Redux-thunk
+Async action creators
+
+axios:-
+Requests to an API end point
+
+redux-thunk:-
+Define async action creators.
+Middleware
+
+what we have learn so far that action creators returns ana action but what thunk middle ware brings to the table is ability for an action creator to return an function insted of an action object
+
+The function dosen't has to be pure it is  allow to have side effect such as asynchronous api calls and this function can also dispatch an action 
+
+it recives dispatch method as its argument
+
+const thunkMiddleware = require("redux-thunk").default;
+
+
+const store = createStore(reducer, applyMiddleware(thunkMiddleware));
+
+const fetchUsers = () => {
+  return function (dispatch) {
+    dispatch(fetchUserRequested());
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .then((res) => {
+        const users = res.data.map((value) => value.id);
+        dispatch(fetchUserSuccess(users));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(fetchUserFailed(err.message));
+      });
+  };
+};
+
+console.log("initial State", store.getState());
+
+store.subscribe(() => {
+  console.log("updated state", store.getState());
+});
+
+store.dispatch(fetchUsers());
+
+
+
+Redux conerns:-
+Redux requires too much boilerplate code 
+-Action
+-Action object
+-action creator
+-Switch statement in a reducer
+
+A lot of other packages have to be installed to work with redux
+-Redux-thunk
+-immer
+-Redux-devtools
+There was a need to improve the developer exprience for redux 
+
+Redux toolkit
+
+
+const redux = require("redux");
+const createStore = redux.createStore;
+const applyMiddleware = redux.applyMiddleware;
+const axios = require("axios");
+const thunkMiddleware = require("redux-thunk").default;
+
+const initialState = {
+  loading: false,
+  users: [],
+  error: "",
+};
+
+const FETCH_USER_REQUESTED = "FETCH_USER_REQUESTED";
+const FETCH_USER_SUCCESSDED = "FETCH_USER_SUCCESSDED";
+const FETCH_USER_FAILED = "FETCH_USER_FAILED";
+
+function fetchUserRequested() {
+  return {
+    type: FETCH_USER_REQUESTED,
+  };
+}
+
+function fetchUserSuccess(users) {
+  return {
+    type: FETCH_USER_SUCCESSDED,
+    payload: users,
+  };
+}
+
+function fetchUserFailed(error) {
+  return {
+    type: fetchUserFailed,
+    payload: error,
+  };
+}
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_USER_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_USER_SUCCESSDED:
+      return {
+        loading: false,
+        users: action.payload,
+        error: "",
+      };
+    case FETCH_USER_FAILED:
+      return {
+        loading: false,
+        users: [],
+        error: action.payload,
+      };
+  }
+};
+
+const store = createStore(reducer, applyMiddleware(thunkMiddleware));
+
+const fetchUsers = () => {
+  return function (dispatch) {
+    dispatch(fetchUserRequested());
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts?_limit=10")
+      .then((res) => {
+        const users = res.data.map((value) => value.id);
+        dispatch(fetchUserSuccess(users));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(fetchUserFailed(err.message));
+      });
+  };
+};
+
+console.log("initial State", store.getState());
+
+store.subscribe(() => {
+  console.log("updated state", store.getState());
+});
+
+store.dispatch(fetchUsers());
